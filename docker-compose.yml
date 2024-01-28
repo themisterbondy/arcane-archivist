@@ -1,0 +1,52 @@
+﻿version: '3.8'
+name: arcane-archivist
+services:
+  arcane-archivist-webapi:
+    container_name: arcane-archivist-webapi
+    build:
+      context: .
+      dockerfile: src/ArcaneArchivist.WebApi/Dockerfile
+    environment:
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'ASPNETCORE_URLS=https://+;http://+'
+      - 'ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNETCORE_KESTREL_CERTIFICATES_DEFAULT_PASSWORD}'
+      - 'ASPNETCORE_Kestrel__Certificates__Default__Path=${ASPNETCORE_KESTREL_CERTIFICATES_DEFAULT_PATH}'
+      - 'DOTNET_USE_POLLING_FILE_WATCHER=true'
+      - 'ConnectionStrings:SQLConnection=${CONNECTION_STRINGS_SQL_CONNECTION}'
+      - 'AzureStorageSettings:ConnectionString=${AZURESTORAGESETTINGS_CONNECTIONSTRING}'
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      - '$USERPROFILE\.aspnet\https:/https/'
+    networks:
+      - arcane
+
+  sqlserver:
+    container_name: arcane-archivist-sql-server
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - C:\Projects\Data\sql-server:/var/opt/mssql/data
+    networks:
+      - arcane
+
+  azurite:
+    container_name: arcane-archivist-storage-account
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - "10000:10000" #blob service's port
+      - "10001:10001" #queue service's port
+      - "10002:10002" #table service's port
+    volumes:
+      - C:\Projects\Data\azurite:/data
+    networks:
+      - arcane
+
+networks:
+  arcane:
+    driver: bridge
