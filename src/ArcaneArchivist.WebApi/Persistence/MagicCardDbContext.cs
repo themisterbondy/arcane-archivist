@@ -1,4 +1,4 @@
-using ArcaneArchivist.WebApi.Entity;
+using ArcaneArchivist.WebApi.Entities.MagicCards;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 

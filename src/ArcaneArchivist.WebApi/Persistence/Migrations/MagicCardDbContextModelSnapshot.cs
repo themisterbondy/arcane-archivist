@@ -22,7 +22,7 @@ namespace ArcaneArchivist.WebApi.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ArcaneArchivist.WebApi.Entity.MagicCard", b =>
+            modelBuilder.Entity("ArcaneArchivist.WebApi.Entities.MagicCard", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -71,9 +71,9 @@ namespace ArcaneArchivist.WebApi.Persistence.Migrations
                     b.ToTable("MagicCards");
                 });
 
-            modelBuilder.Entity("ArcaneArchivist.WebApi.Entity.MagicCard", b =>
+            modelBuilder.Entity("ArcaneArchivist.WebApi.Entities.MagicCard", b =>
                 {
-                    b.OwnsOne("ArcaneArchivist.WebApi.Entity.ManaCost", "ManaCost", b1 =>
+                    b.OwnsOne("ArcaneArchivist.WebApi.Entities.ManaCost", "ManaCost", b1 =>
                         {
                             b1.Property<Guid>("MagicCardId")
                                 .HasColumnType("uniqueidentifier");
@@ -87,7 +87,7 @@ namespace ArcaneArchivist.WebApi.Persistence.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("MagicCardId");
 
-                            b1.OwnsMany("ArcaneArchivist.WebApi.Entity.ManaCostColor", "ManaColors", b2 =>
+                            b1.OwnsMany("ArcaneArchivist.WebApi.Entities.ManaCostColor", "ManaColors", b2 =>
                                 {
                                     b2.Property<Guid>("ManaCostMagicCardId")
                                         .HasColumnType("uniqueidentifier");

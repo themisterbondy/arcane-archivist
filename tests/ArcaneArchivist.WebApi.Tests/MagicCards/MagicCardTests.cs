@@ -1,3 +1,5 @@
+using ArcaneArchivist.WebApi.Entities.MagicCards;
+
 namespace ArcaneArchivist.WebApi.Tests;
 
 public class MagicCardTests

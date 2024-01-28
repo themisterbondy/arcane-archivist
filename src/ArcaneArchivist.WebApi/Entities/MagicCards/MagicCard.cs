@@ -1,4 +1,6 @@
-namespace ArcaneArchivist.WebApi.Entity;
+using ArcaneArchivist.SharedKernel;
+
+namespace ArcaneArchivist.WebApi.Entities.MagicCards;
 
 public record MagicCardId(Guid Value)
 {
@@ -8,7 +10,7 @@ public record MagicCardId(Guid Value)
     }
 }
 
-public class MagicCard
+public class MagicCard : Entity
 {
     public MagicCardId Id { get; set; }
     public string Name { get; set; } // Nome da carta
@@ -28,7 +30,7 @@ public class MagicCard
     public static MagicCard Create(MagicCardId id, string name, CardType type, CardRarity rarity, int power,
         int toughness, ManaCost manaCost, int quantity)
     {
-        return new MagicCard
+        var magicCard = new MagicCard
         {
             Id = id,
             Name = name,
@@ -39,5 +41,9 @@ public class MagicCard
             ManaCost = manaCost,
             Quantity = quantity
         };
+
+        magicCard.Raise(new MagicCardCreatedDomainEvent(magicCard.Id));
+
+        return magicCard;
     }
 }

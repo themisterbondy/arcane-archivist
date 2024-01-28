@@ -1,4 +1,4 @@
-namespace ArcaneArchivist.WebApi.Entity;
+namespace ArcaneArchivist.WebApi.Entities.MagicCards;
 
 public enum CardColor
 {
