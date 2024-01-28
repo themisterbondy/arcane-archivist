@@ -1,6 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcaneArchivist.WebApi", "ArcaneArchivist.WebApi\ArcaneArchivist.WebApi.csproj", "{B49041AA-F9B8-4748-A869-CABFD1D9F8AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcaneArchivist.WebApi", "src\ArcaneArchivist.WebApi\ArcaneArchivist.WebApi.csproj", "{B49041AA-F9B8-4748-A869-CABFD1D9F8AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B247107-76FA-489B-BAA1-CB8929E57C96}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80F28B35-A7D8-42B1-BB9C-D1A8BAD53159}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{41F21F5A-4DFA-4825-A27C-FD4B75893826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcaneArchivist.WebApi.Tests", "tests\ArcaneArchivist.WebApi.Tests\ArcaneArchivist.WebApi.Tests.csproj", "{0D74D485-CB24-42D7-B481-52805AE5B4F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +23,13 @@ Global
 		{B49041AA-F9B8-4748-A869-CABFD1D9F8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B49041AA-F9B8-4748-A869-CABFD1D9F8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B49041AA-F9B8-4748-A869-CABFD1D9F8AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D74D485-CB24-42D7-B481-52805AE5B4F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D74D485-CB24-42D7-B481-52805AE5B4F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D74D485-CB24-42D7-B481-52805AE5B4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D74D485-CB24-42D7-B481-52805AE5B4F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B49041AA-F9B8-4748-A869-CABFD1D9F8AD} = {80F28B35-A7D8-42B1-BB9C-D1A8BAD53159}
+		{0D74D485-CB24-42D7-B481-52805AE5B4F4} = {41F21F5A-4DFA-4825-A27C-FD4B75893826}
 	EndGlobalSection
 EndGlobal
