@@ -1,0 +1,24 @@
+@Local = https://localhost:7147
+
+### Magic Cards
+POST {{Local}}/api/magic-cards
+Content-Type: application/json
+
+{
+  "name": "Goblin Berserker",
+  "type": "Creature",
+  "rarity": "Common",
+  "power": 3,
+  "toughness": 2,
+  "manaColors": [
+    {
+      "color": "Red",
+      "quantity": 1
+    }
+  ],
+  "description": "Goblin Berserker gets +2/+0 as long as it's attacking.",
+  "collection": "Core Set 2023",
+  "edition": "First",
+  "quantity": 4,
+  "imageUrl": "http://example.com/images/goblin_berserker.jpg"
+}
