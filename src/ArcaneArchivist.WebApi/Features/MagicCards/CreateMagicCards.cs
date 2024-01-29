@@ -1,8 +1,8 @@
 using ArcaneArchivist.SharedKernel;
 using ArcaneArchivist.WebApi.Common.Extensions;
-using ArcaneArchivist.WebApi.Common.Messaging;
 using ArcaneArchivist.WebApi.Contracts;
 using ArcaneArchivist.WebApi.Entities.MagicCards;
+using ArcaneArchivist.WebApi.Messaging.MegicCard;
 using ArcaneArchivist.WebApi.Persistence;
 using Carter;
 using Carter.OpenApi;
@@ -68,7 +68,7 @@ public class CreateMagicCards
         }
     }
 
-    public class Handler(MagicCardDbContext context, IQueue queueService)
+    public class Handler(MagicCardDbContext context, IMegicCardCreatedQueue queue, ITesteQueue testeQueue)
         : IRequestHandler<Command, Result<MagicCardResponse>>
     {
         public async Task<Result<MagicCardResponse>> Handle(Command request, CancellationToken cancellationToken)
@@ -85,7 +85,8 @@ public class CreateMagicCards
 
             await context.SaveChangesAsync(cancellationToken);
 
-            await queueService.SendMessageAsync("create-magic-cards", magicCard);
+            await queue.PublishAsync(magicCard);
+            await testeQueue.PublishAsync("teste");
 
             return Result.Success(MagicCardsTools.BuildResponse(magicCard));
         }

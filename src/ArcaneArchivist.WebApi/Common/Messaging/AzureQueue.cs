@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ArcaneArchivist.WebApi.Services;
 
-public class AzureQueueService(QueueServiceClient queueServiceClient) : IQueue
+public class AzureQueue(QueueServiceClient queueServiceClient) : IQueue
 {
     public async Task SendMessageAsync<T>(string queueName, T message)
     {
@@ -30,7 +30,7 @@ public class AzureQueueService(QueueServiceClient queueServiceClient) : IQueue
             if (response.Value.Length > 0)
             {
                 var message = response.Value[0];
-                await queueClient.DeleteMessageAsync(message.MessageId, message.PopReceipt);
+                //await queueClient.DeleteMessageAsync(message.MessageId, message.PopReceipt);
 
                 var deserializedMessage = JsonConvert.DeserializeObject<T>(message.MessageText);
                 return deserializedMessage;

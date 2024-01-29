@@ -4,6 +4,7 @@ using ArcaneArchivist.WebApi.Common;
 using ArcaneArchivist.WebApi.Common.Behavior;
 using ArcaneArchivist.WebApi.Common.Messaging;
 using ArcaneArchivist.WebApi.Jobs;
+using ArcaneArchivist.WebApi.Messaging.MegicCard;
 using ArcaneArchivist.WebApi.Persistence;
 using ArcaneArchivist.WebApi.Services;
 using Azure.Storage.Queues;
@@ -54,9 +55,18 @@ public static class DependencyInjection
         var storageConnectionString = configuration.GetValue<string>("AzureStorageSettings:ConnectionString");
         services.AddSingleton(x => new QueueServiceClient(storageConnectionString));
 
-        services.AddSingleton<IQueue, AzureQueueService>();
+        services.AddSingleton<IQueue, AzureQueue>();
+
+        services.AddScoped<IMegicCardCreatedQueue, MegicCardCreatedQueue>();
+        services.AddSingleton<IConsumerQueue, MegicCardCreatedQueue>();
+        services.AddSingleton<IPublisherQueue, MegicCardCreatedQueue>();
+
+        services.AddScoped<ITesteQueue, TesteQueue>();
+        services.AddSingleton<IConsumerQueue, TesteQueue>();
+        services.AddSingleton<IPublisherQueue, TesteQueue>();
 
         services.AddHostedService<MagicCardCreatedJob>();
+        services.AddHostedService<TesteJob>();
 
         return services;
     }
