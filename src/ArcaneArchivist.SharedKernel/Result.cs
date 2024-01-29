@@ -14,14 +14,50 @@ public class Result
     ///     Thrown when the isSuccess parameter is true and the error parameter is not Error.None,
     ///     or when the isSuccess parameter is false and the error parameter is Error.None.
     /// </exception>
-    protected internal Result(bool isSuccess, Error error)
+    protected Result(bool isSuccess, Error error)
     {
-        if (isSuccess && error != Error.None) throw new InvalidOperationException();
+        switch (isSuccess)
+        {
+            case true when error != Error.None:
+                throw new InvalidOperationException();
+            case false when error == Error.None:
+                throw new InvalidOperationException();
+            default:
+                IsSuccess = isSuccess;
+                Error = error;
+                break;
+        }
+    }
 
-        if (!isSuccess && error == Error.None) throw new InvalidOperationException();
+    protected Result(bool isSuccess, Error[] errors)
+    {
+        switch (isSuccess)
+        {
+            case true when errors != null:
+                throw new InvalidOperationException();
+            case false when errors == null:
+                throw new InvalidOperationException();
+            default:
+                IsSuccess = isSuccess;
+                Errors = errors;
+                break;
+        }
+    }
 
-        IsSuccess = isSuccess;
-        Error = error;
+    protected Result(bool isSuccess, Error error, Error[] errors)
+    {
+        switch (isSuccess)
+        {
+            case true when error != Error.None:
+                throw new InvalidOperationException();
+            case false when error == Error.None:
+                throw new InvalidOperationException();
+            default:
+                IsSuccess = isSuccess;
+                Error = error;
+                Errors = errors;
+                break;
+        }
     }
 
     /// <summary>
@@ -48,11 +84,13 @@ public class Result
     /// </value>
     public Error Error { get; }
 
+    public Error[] Errors { get; }
+
     /// <summary>
     ///     Creates a new instance of the Result class with a successful result and no error.
     /// </summary>
     /// <returns>A new instance of the Result class with a successful result and no error.</returns>
-    public static Result Success()
+    private static Result Success()
     {
         return new Result(true, Error.None);
     }
@@ -78,6 +116,16 @@ public class Result
         return new Result(false, error);
     }
 
+    public static Result Failure(Error[] errors)
+    {
+        return new Result(false, errors);
+    }
+
+    public static Result Failure(Error error, Error[] errors)
+    {
+        return new Result(false, error, errors);
+    }
+
     /// <summary>
     ///     Returns a failure result with the specified error.
     /// </summary>
@@ -87,6 +135,16 @@ public class Result
     public static Result<TValue> Failure<TValue>(Error error)
     {
         return new Result<TValue>(default, false, error);
+    }
+
+    public static Result<TValue> Failure<TValue>(Error[] errors)
+    {
+        return new Result<TValue>(default, false, errors);
+    }
+
+    public static Result<TValue> Failure<TValue>(Error error, Error[] errors)
+    {
+        return new Result<TValue>(default, false, error, errors);
     }
 
     /// <summary>
@@ -101,22 +159,5 @@ public class Result
     public static Result<TValue> Create<TValue>(TValue? value)
     {
         return value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
-    }
-
-    /// <summary>
-    ///     Returns the first failure result or success result from the given array of asynchronous result tasks.
-    /// </summary>
-    /// <param name="results">An array of asynchronous result tasks.</param>
-    /// <returns>The first failure result if found, otherwise returns a success result.</returns>
-    public static async Task<Result> FirstFailureOrSuccess(params Func<Task<Result>>[] results)
-    {
-        foreach (var resultTask in results)
-        {
-            var result = await resultTask();
-
-            if (result.IsFailure) return result;
-        }
-
-        return Success();
     }
 }

@@ -10,22 +10,9 @@ public class ValidationResult<TValue> : Result<TValue>, IValidationResult
     ///     Represents the result of a validation process.
     /// </summary>
     /// <param name="errors">An array of Error objects representing the validation errors.</param>
-    private ValidationResult(Error[] errors) : base(default, false, IValidationResult.ValidataionError)
+    private ValidationResult(Error[] errors) : base(default, false, IValidationResult.ValidataionError, errors)
     {
-        Errors = errors;
     }
-
-    /// <summary>
-    ///     Gets or sets the array of errors.
-    /// </summary>
-    /// <remarks>
-    ///     This property allows access to the collection of errors that occurred during a process or operation.
-    ///     The Errors property is read-only and only allows getting the array of Error objects.
-    /// </remarks>
-    /// <value>
-    ///     An array of Error objects representing the errors.
-    /// </value>
-    public Error[] Errors { get; }
 
     /// <summary>
     ///     Creates a new instance of ValidationResult with the specified errors.

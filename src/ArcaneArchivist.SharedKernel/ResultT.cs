@@ -22,6 +22,16 @@ public class Result<TValue> : Result
         _value = value;
     }
 
+    public Result(TValue? value, bool isSuccess, Error[] errors) : base(isSuccess, errors)
+    {
+        _value = value;
+    }
+
+    public Result(TValue? value, bool isSuccess, Error error, Error[] errors) : base(isSuccess, error, errors)
+    {
+        _value = value;
+    }
+
     /// <summary>
     ///     Gets the value of the property.
     /// </summary>

@@ -8,18 +8,9 @@ public class ValidationResult : Result, IValidationResult
     /// <summary>
     ///     Represents the result of a validation operation.
     /// </summary>
-    private ValidationResult(Error[] errors) : base(false, IValidationResult.ValidataionError)
+    private ValidationResult(Error[] errors) : base(false, IValidationResult.ValidataionError, errors)
     {
-        Errors = errors;
     }
-
-    /// <summary>
-    ///     Gets the array of errors that occurred.
-    /// </summary>
-    /// <value>
-    ///     An array of Error objects representing the errors that occurred.
-    /// </value>
-    public Error[] Errors { get; }
 
     /// <summary>
     ///     Creates a new instance of ValidationResult with the specified array of errors.
