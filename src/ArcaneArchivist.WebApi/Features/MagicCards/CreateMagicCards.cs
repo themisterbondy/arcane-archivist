@@ -68,7 +68,7 @@ public class CreateMagicCards
         }
     }
 
-    public class Handler(MagicCardDbContext context, IMegicCardCreatedQueue queue, ITesteQueue testeQueue)
+    public class Handler(MagicCardDbContext context, MegicCardCreatedQueue queue)
         : IRequestHandler<Command, Result<MagicCardResponse>>
     {
         public async Task<Result<MagicCardResponse>> Handle(Command request, CancellationToken cancellationToken)
@@ -86,7 +86,6 @@ public class CreateMagicCards
             await context.SaveChangesAsync(cancellationToken);
 
             await queue.PublishAsync(magicCard);
-            await testeQueue.PublishAsync("teste");
 
             return Result.Success(MagicCardsTools.BuildResponse(magicCard));
         }

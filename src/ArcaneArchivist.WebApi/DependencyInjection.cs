@@ -55,18 +55,11 @@ public static class DependencyInjection
         var storageConnectionString = configuration.GetValue<string>("AzureStorageSettings:ConnectionString");
         services.AddSingleton(x => new QueueServiceClient(storageConnectionString));
 
-        services.AddSingleton<IQueue, AzureQueue>();
+        services.AddSingleton<IQueue, AzureQueueService>();
 
-        services.AddScoped<IMegicCardCreatedQueue, MegicCardCreatedQueue>();
-        services.AddSingleton<IConsumerQueue, MegicCardCreatedQueue>();
-        services.AddSingleton<IPublisherQueue, MegicCardCreatedQueue>();
-
-        services.AddScoped<ITesteQueue, TesteQueue>();
-        services.AddSingleton<IConsumerQueue, TesteQueue>();
-        services.AddSingleton<IPublisherQueue, TesteQueue>();
+        services.AddSingleton<MegicCardCreatedQueue>();
 
         services.AddHostedService<MagicCardCreatedJob>();
-        services.AddHostedService<TesteJob>();
 
         return services;
     }
