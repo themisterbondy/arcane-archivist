@@ -1,22 +1,23 @@
-using ArcaneArchivist.WebApi.Persistence;
-using Microsoft.EntityFrameworkCore;
+using ArcaneArchivist.WebApi;
+using ArcaneArchivist.WebApi.Common;
+using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<MagicCardDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection"),
-        options =>
-        {
-            options.EnableRetryOnFailure(2,
-                TimeSpan.FromSeconds(3),
-                new List<int>());
-        });
-});
+var configuration = AppSettings.Configuration();
+
+builder.Services
+    .AddWebApi(configuration)
+    .AddMediat()
+    .AddSwagger();
 
 var app = builder.Build();
 
+app.UseHealthChecksConfiguration();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseHttpsRedirection();
+app.UseExceptionHandler();
 
-app.MapGet("/", () => "Hello World!");
-
+app.MapCarter();
 app.Run();
