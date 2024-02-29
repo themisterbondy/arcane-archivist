@@ -19,7 +19,7 @@ jobs:
           dotnet test --logger "html;logfilename=testResults.html" --results-directory TestResults --collect:"XPlat Code Coverage"
 
       - name: Convert HTML to Image
-        uses: getsentry/action-html-to-image@v1
+        uses: getsentry/action-html-to-image
         with:
           input_file: 'TestResults/testResults.html'
           output_file: 'TestResults/testResults.png'
