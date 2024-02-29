@@ -18,11 +18,13 @@ jobs:
           dotnet build
           dotnet test --logger "html;logfilename=testResults.html" --results-directory TestResults --collect:"XPlat Code Coverage"
 
-      - name: Extract Images from HTML
-        uses: ericvergnaud/action-html-img-extractor@v1
+      - name: Convert HTML to Image
+        uses: getsentry/action-html-to-image@v1
         with:
-          html_file: 'TestResults/testResults.html'
-          output_folder: 'TestResults/Images'
+          input_file: 'TestResults/testResults.html'
+          output_file: 'TestResults/testResults.png'
+          width: '1200'
+          height: '900'
 
       - name: Publish Xunit Results
         uses: actions/upload-artifact@v2
@@ -30,8 +32,8 @@ jobs:
           name: TestResults
           path: TestResults
 
-      - name: Publish Images as Artifact
+      - name: Publish Image as Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: TestImages
-          path: TestResults/Images
+          name: TestImage
+          path: TestResults/testResults.png
