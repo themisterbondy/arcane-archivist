@@ -21,10 +21,10 @@ jobs:
       - name: Build and Test
         run: |
           dotnet build
-          dotnet test --logger "html;logfilename=testResults.html" --results-directory TestResults --collect:"XPlat Code Coverage"
+          dotnet test --logger "html;logfilename=testResults.html" --results-directory TestResults 
 
       - name: Convert HTML to Image
-        uses: getsentry/action-html-to-image
+        uses: getsentry/action-html-to-image@v1
         with:
           input_file: 'TestResults/testResults.html'
           output_file: 'TestResults/testResults.png'
