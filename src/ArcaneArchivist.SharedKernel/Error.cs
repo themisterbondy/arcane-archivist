@@ -1,17 +1,17 @@
 namespace ArcaneArchivist.SharedKernel;
 
 /// <summary>
-///     Represents an error with its code, message, and type.
+/// Represents an error with its code, message, and type.
 /// </summary>
 public record Error
 {
     /// <summary>
-    ///     Represents a special error instance used to represent no error.
+    /// Represents a special error instance used to represent no error.
     /// </summary>
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);
 
     /// <summary>
-    ///     Represents a special error instance used to represent no error.
+    /// Represents a special error instance used to represent no error.
     /// </summary>
     public static readonly Error NullValue = new("Error.NullValue", "The specified result value is null.",
         ErrorType.Failure);
@@ -28,7 +28,7 @@ public record Error
     public ErrorType ErrorType { get; }
 
     /// <summary>
-    ///     Represents a failure error with its code and message.
+    /// Represents a failure error with its code and message.
     /// </summary>
     /// <param name="code">The code of the error.</param>
     /// <param name="message">The message describing the error.</param>

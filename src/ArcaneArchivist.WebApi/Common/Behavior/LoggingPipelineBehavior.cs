@@ -1,5 +1,6 @@
 using ArcaneArchivist.SharedKernel;
 using MediatR;
+using Serilog.Context;
 
 namespace ArcaneArchivist.WebApi.Common.Behavior;
 
@@ -13,24 +14,23 @@ public class LoggingPipelineBehavior<TRequest, TResponse>(ILogger<LoggingPipelin
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+        var requestname = typeof(TRequest).Name;
+
         logger.LogInformation(
-            "Starting request {@RequestName}, {@DateTimeUtc}",
-            typeof(TRequest).Name,
-            DateTime.UtcNow);
+            "Starting request {@RequestName}", requestname);
 
         var result = await next();
 
         if (result.IsFailure)
+        {
+            LogContext.PushProperty("Error", result.Error, true);
+            LogContext.PushProperty("Errors", result.Errors, true);
             logger.LogError(
-                "Request failure {@RequestName}, {@Error}, {@DateTimeUtc}",
-                typeof(TRequest).Name,
-                result.Error,
-                DateTime.UtcNow);
+                "Completed request {@RequestName} with error", requestname);
+        }
 
         logger.LogInformation(
-            "Completed request {@RequestName}, {@DateTimeUtc}",
-            typeof(TRequest).Name,
-            DateTime.UtcNow);
+            "Completed request {@RequestName}", requestname);
 
         return result;
     }

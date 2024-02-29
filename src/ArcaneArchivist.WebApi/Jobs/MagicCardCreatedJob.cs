@@ -10,9 +10,9 @@ public class MagicCardCreatedJob(ILogger<MagicCardCreatedJob> logger, MegicCardC
         while (!stoppingToken.IsCancellationRequested)
         {
             var message = await queue.ReceiveAsync<MagicCard>();
-            if (message != null) logger.LogInformation("Message received: {Message}", message);
+            if (message != null) logger.LogInformation("Message received: {Message}", message.Id);
 
-            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
         }
     }
 }

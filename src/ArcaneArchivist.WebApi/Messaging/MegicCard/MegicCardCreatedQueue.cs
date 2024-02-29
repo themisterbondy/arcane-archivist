@@ -4,7 +4,7 @@ namespace ArcaneArchivist.WebApi.Messaging.MegicCard;
 
 public class MegicCardCreatedQueue(IQueue queue)
 {
-    private readonly string queueName = "created-magic-cards";
+    private readonly string queueName = "megic-card-created";
 
     public async Task PublishAsync<T>(T message)
     {

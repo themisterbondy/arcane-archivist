@@ -26,7 +26,8 @@ public static class ResultExtensions
         {
             return errorType switch
             {
-                ErrorType.Validation => StatusCodes.Status400BadRequest,
+                ErrorType.Failure => StatusCodes.Status400BadRequest,
+                ErrorType.Validation => StatusCodes.Status422UnprocessableEntity,
                 ErrorType.NotFound => StatusCodes.Status404NotFound,
                 ErrorType.Conflict => StatusCodes.Status409Conflict,
                 _ => StatusCodes.Status500InternalServerError
@@ -37,7 +38,8 @@ public static class ResultExtensions
         {
             return errorType switch
             {
-                ErrorType.Validation => "Bad Request",
+                ErrorType.Failure => "Bad Request",
+                ErrorType.Validation => "Unprocessable Content",
                 ErrorType.NotFound => "Not Found",
                 ErrorType.Conflict => "Conflict",
                 _ => "Internal Server Error"
@@ -48,10 +50,11 @@ public static class ResultExtensions
         {
             return errorType switch
             {
-                ErrorType.Validation => "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                ErrorType.NotFound => "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                ErrorType.Conflict => "https://tools.ietf.org/html/rfc7231#section-6.5.8",
-                _ => "https://tools.ietf.org/html/rfc7231#section-6.6.1"
+                ErrorType.Failure => "https://datatracker.ietf.org/doc/html/rfc9110#status.400",
+                ErrorType.Validation => "https://datatracker.ietf.org/doc/html/rfc9110#status.422",
+                ErrorType.NotFound => "https://datatracker.ietf.org/doc/html/rfc9110#status.404",
+                ErrorType.Conflict => "https://datatracker.ietf.org/doc/html/rfc9110#status.409",
+                _ => "https://datatracker.ietf.org/doc/html/rfc9110#status.500"
             };
         }
     }

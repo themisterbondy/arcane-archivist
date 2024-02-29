@@ -68,7 +68,7 @@ public class CreateMagicCards
         }
     }
 
-    public class Handler(MagicCardDbContext context, MegicCardCreatedQueue queue)
+    public class Handler(MagicCardDbContext context, MegicCardCreatedQueue queue, ILogger<Handler> logger)
         : IRequestHandler<Command, Result<MagicCardResponse>>
     {
         public async Task<Result<MagicCardResponse>> Handle(Command request, CancellationToken cancellationToken)

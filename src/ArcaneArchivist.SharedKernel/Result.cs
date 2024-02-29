@@ -90,7 +90,7 @@ public class Result
     ///     Creates a new instance of the Result class with a successful result and no error.
     /// </summary>
     /// <returns>A new instance of the Result class with a successful result and no error.</returns>
-    private static Result Success()
+    public static Result Success()
     {
         return new Result(true, Error.None);
     }
