@@ -23,27 +23,8 @@ jobs:
           dotnet build
           dotnet test --logger "html;logfilename=testResults.html" --results-directory TestResults 
 
-      - name: Convert HTML to Marp Presentation
-        uses: KoharaKazuya/marp-cli-action@v2
-        with:
-          html: 'TestResults/testResults.html'
-          output: presentation.md
-
-      - name: Export Marp Presentation to Image
-        uses: KoharaKazuya/marp-cli-action@v2
-        with:
-          markdown: presentation.md
-          output: TestResults/testResults.png
-          allow-local-files: true
-
       - name: Publish Xunit Results
         uses: actions/upload-artifact@v2
         with:
           name: TestResults
-          path: TestResults
-
-      - name: Publish Image as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: TestImage
-          path: TestResults/testResults.png
+          path: TestResults/testResults.html
