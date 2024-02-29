@@ -23,13 +23,18 @@ jobs:
           dotnet build
           dotnet test --logger "html;logfilename=testResults.html" --results-directory TestResults 
 
-      - name: Convert HTML to Image
-        uses: getsentry/action-html-to-image@v1
+      - name: Convert HTML to Marp Presentation
+        uses: marp-team/marp-cli@v1
         with:
-          input_file: 'TestResults/testResults.html'
-          output_file: 'TestResults/testResults.png'
-          width: '1200'
-          height: '900'
+          html: 'TestResults/testResults.html'
+          output: presentation.md
+
+      - name: Export Marp Presentation to Image
+        uses: marp-team/marp-cli@v1
+        with:
+          markdown: presentation.md
+          output: TestResults/testResults.png
+          allow-local-files: true
 
       - name: Publish Xunit Results
         uses: actions/upload-artifact@v2
